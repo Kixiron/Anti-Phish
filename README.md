@@ -1,7 +1,7 @@
 # Anti-Phish
 An anti-phishing script
 
-#License
+# License
 Copyright 2018 Kixiron
 
 Licensed under the Apache License, Version 2.0 (the "License");
