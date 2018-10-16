@@ -1,8 +1,6 @@
 # Anti-Phish
 An anti-phishing script
 
-# Usage
-
 # Disclaimer
 The usage of this script in a criminal manner is not endorsed by me, and you hold all responsibility for your actions.
 Never use this script on a website which you do not own.
