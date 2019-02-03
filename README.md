@@ -38,7 +38,7 @@ The username field draws from names.json, which contains over 8000 names.
 ```
 
 The domainlist is a switch that chooses between two domainlists, domains.json (Containing the seven most popular domains), and alldomains.json (Containing every domain I could find).  
-True = all domains, False = common domains
+`True` = all domains, `False` = common domains
 
 -----
 
