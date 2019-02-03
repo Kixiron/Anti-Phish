@@ -22,10 +22,10 @@ import requests
 # limitations under the License.
 
 parser = argparse.ArgumentParser(description="Anti-Phish, an anti-phishing website script")
-parser.add_argument('url', help="URL of the target site")
-parser.add_argument('-u', '--username', help="The username field of the target site")
-parser.add_argument('-p', '--password', help="The password field of the target site")
-parser.add_argument('-dl', '--domainlist', help="The email domain list to choose")
+parser.add_argument('url', help="URL of the target site", type=str)
+parser.add_argument('-u', '--username', help="The username field of the target site", type=str)
+parser.add_argument('-p', '--password', help="The password field of the target site", type=str)
+parser.add_argument('-dl', '--domainlist', help="The email domain list to choose", type=bool)
 args = parser.parse_args()
 
 if not args.url:
@@ -45,8 +45,10 @@ if not args.password:
 
 if not args.domainlist:
     domain = json.loads(open('data/domains.json').read())
+    domains = False
 else:
     domain = json.loads(open('data/alldomains.json').read())
+    domains = True
 
 
 url = args.url
@@ -58,21 +60,25 @@ random.seed()
 
 name = json.loads(open('data/names.json').read())
 
-print(flush=True)
-
 entry_num = 0
 while(1):
-    entry_num += entry_num
-    nameAdd = ''.join(random.choice(name).lower())
-    digitAdd = ''.join(random.choice(string.digits) for i in range(0, 4))
-    domainAdd = ''.join(random.choice(domain))
+    try:
+        entry_num += 1
+        nameAdd = ''.join(random.choice(name).lower())
+        digitAdd = ''.join(random.choice(string.digits) for i in range(0, 4))
+        domainAdd = ''.join(random.choice(domain))
 
-    username = nameAdd + digitAdd + domainAdd
-    password = ''.join(random.choice(chars) for i in range(0, 20))
+        username = nameAdd + digitAdd + domainAdd
+        password = ''.join(random.choice(chars) for i in range(0, 20))
 
-    requests.post(url, allow_redirects=False, data={
-        formusername : username,
-        formpassword : password
-    })
+        requests.post(url, allow_redirects=False, data={
+            formusername : username,
+            formpassword : password
+        })
 
-    print("Sending username {} and password {} | Entry #{}".format(username, password, entry_num))
+        print("Sending username {} and password {} | Entry #{}".format(username, password, entry_num))
+
+    except KeyboardInterrupt:
+        print("You sent {} total requests to {}".format(entry_num, url))
+        print("Command used: py antiphish.py {} -u {} -p {} -dl {}".format(url, formusername, formpassword, domains))
+        sys.exit()
